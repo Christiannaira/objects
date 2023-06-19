@@ -1,0 +1,124 @@
+<?php
+
+interface Horn
+{
+    public function makeSound();
+}
+
+abstract class Vehicle
+{
+    protected $brand;
+    protected $color;
+    protected $year;
+
+    function __construct($brand, $color, $year)
+    {
+        $this->brand = $brand;
+        $this->color = $color;
+        $this->year = $year;
+    }
+
+    public function getBrand()
+    {
+        return "$this->brand";
+    }
+
+    public function getColor()
+    {
+        return "$this->color";
+    }
+
+    public function getYear()
+    {
+        return "$this->year";
+    }
+
+    public function displayInfo()
+    {
+        echo $this->getBrand() . $this->getColor() . $this->getYear();
+    }
+
+}
+
+class Car extends Vehicle
+{
+    private $model;
+
+    function __construct($brand, $color, $year, $model)
+    {
+        $this->model = $model;
+        $this->brand = $brand;
+        $this->color = $color;
+        $this->year = $year;
+
+        parent::__construct($brand, $color, $year);
+    }
+
+    public function displayInfo()
+    {
+        echo $this->getBrand() . $this->getColor() . $this->getYear() . $this->model;
+    }
+}
+
+class Motorcycle extends Vehicle
+{
+    private $type;
+
+    function __construct($brand, $color, $year, $type)
+    {
+        $this->type = $type;
+        $this->brand = $brand;
+        $this->color = $color;
+        $this->year = $year;
+
+        parent::__construct($brand, $color, $year);
+    }
+
+    public function displayInfo()
+    {
+        echo $this->getBrand() . $this->getColor() . $this->getYear() . $this->type;
+    }
+}
+
+$car = new Car('lamborghini ', 'black ', '2023 ', '01a');
+$car->displayInfo();
+echo "<br>";
+
+$motor = new Motorcycle('ferrari ', 'white ', '2021 ', '11aa');
+$motor->displayInfo();
+echo "<br>";
+final class ElectricCar extends Car
+{
+    const BATTERY_TYPE = 'Lithium-ion';
+
+
+    public function displayInfo()
+    {
+        echo $this->getBrand() . $this->getColor() . $this->getYear() . self::BATTERY_TYPE;
+    }
+
+
+}
+
+
+$elec = new ElectricCar('lamborghini ', 'black ', '2023 ', '01a');
+$elec->displayInfo();
+
+?>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

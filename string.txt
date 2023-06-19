@@ -1,0 +1,144 @@
+$string = 'hello world';
+$string2 = 'Christian Naira';
+
+echo strlen($string) . '<br>';
+print(str_word_count($string)) . '<br>';
+echo strrev($string2) . '<br>';
+echo strpos($string, 'world') . '<br>';
+echo strpos($string, 'world') . '<br>';
+echo str_replace('world', 'EARTH', $string) . '<br>';
+echo $string . '<br>';
+
+$x = 5985;
+$y = 1.2;
+echo is_integer($x) . '<br>';
+var_dump(is_integer($x));
+var_dump(is_float($y));
+
+$x = 5985;
+$x = "5985";
+$x = "59.85" + 100;
+$x = "HELLO";
+var_dump(is_numeric($x));
+var_dump(is_integer($x));
+var_dump(is_string($x));
+
+
+$x = 23465.768;
+$string_cast = (string) $x;
+var_dump($string_cast);
+
+echo "<br>";
+
+$int_cast = (int) $x;
+var_dump($int_cast);
+var_dump((int) $x);
+$string = 'Christian';
+var_dump(range(1, 10));
+echo '<br>';
+print_r(range(1, 20));
+
+echo rand(1, 10);
+
+define("GREETING", 'Welcome sir!');
+echo GREETING;
+
+function myTest()
+{
+    echo GREETING;
+}
+
+myTest();
+
+define("cars", [
+    "Alfa Romeo",
+    "BMW",
+    "Toyota"
+]);
+
+echo cars[1];
+
+function greet()
+{
+    $name = 'Christian';
+    echo $name;
+}
+
+greet();
+
+$str = "Visit W3Schools";
+$pattern = "/w3schools/i";
+
+if (preg_match($pattern, $str)) {
+    echo 'hello world';
+} else {
+    echo 'wew';
+}
+
+$str = "The rain in SPAIN falls mainly on the plains.";
+$pattern = "/ain/i";
+echo preg_match_all($pattern, $str);
+
+$str = "Visit microsoft!";
+$pattern = "/microsoft/i";
+echo preg_replace($pattern, "You Academy", $str);
+
+$str = "Apples and bananas";
+$pattern = "/ba(na){2}/i";
+echo preg_match($pattern, $str);
+
+$str = addcslashes("Hello World!", "W");
+echo $str;
+
+$str = "Welcome to my humble Homepage!";
+echo $str . "<br>";
+echo addcslashes($str, 'm') . "<br>";
+echo addcslashes($str, 'h') . "<br>";
+
+$str = "Welcome to my humble Homepage!";
+echo $str . "<br>";
+echo addcslashes($str, 'A..Z') . "<br>";
+echo addcslashes($str, 'a..z') . "<br>";
+echo addcslashes($str, 'a..g') . "<br>";
+
+$str = addslashes('What does "yolo" mean?');
+echo $str;
+
+$str = "Who's Peter Griffin?";
+echo $str . " This is not safe in a database query.<br>";
+echo addslashes($str) . " This is safe in a database query."
+
+$str = "Hello World!";
+echo chop($str, "World!");
+
+$str = "Hello World!\n\n";
+echo $str;
+echo chop($str);
+
+$str = "Hello World!";
+echo chunk_split($str, 1, ".");
+echo chunk_split($str, 6, "...");
+
+$str = "Hello world. It's a beautiful day.";
+print_r(explode(" ", $str));
+
+$name = 'My name is Christian Naira.';
+print_r(explode(" ", $name));
+
+$str = "one, two, three, four";
+print_r(explode(",", $str, 0));
+print_r(explode(",", $str, 2));
+print_r(explode(",", $str, -1));
+
+$arr = array("Hello", "World", "Beautiful", "Day!");
+echo implode(" ", $arr) . "<br>";
+echo implode("+", $arr) . "<br>";
+echo implode("-", $arr) . "<br>";
+echo implode("*", $arr) . "<br>";
+
+echo join("-", $arr);
+
+$str = " Hello World! ";
+echo "Without trim: " . $str;
+echo "<br>";
+echo "With trim: " . trim($str);

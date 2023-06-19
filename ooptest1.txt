@@ -1,0 +1,313 @@
+<?php
+
+class Person
+{
+    private $name;
+    protected $age;
+    public $gender;
+    private static $greetings = 0;
+
+    public function __construct($name, $age, $gender)
+    {
+
+        $this->name = $name;
+        $this->age = $age;
+        $this->gender = $gender;
+        self::$greetings += 1;
+    }
+
+    public function introduce()
+    {
+        echo "My name is $this->name. I am $this->age years old and I am a $this->gender.";
+    }
+
+    public function __destruct()
+    {
+        echo "<br>Person object destroyed.";
+    }
+
+    public static function countObjects()
+    {
+
+        echo self::$greetings;
+    }
+
+
+}
+
+class Student extends Person
+{
+    private $studentId;
+
+    public function __construct($name, $age, $gender, $studentId)
+    {
+        parent::__construct($name, $age, $gender);
+        $this->studentId = $studentId;
+        $this->name = $name;
+        $this->age = $age;
+        $this->gender = $gender;
+    }
+
+    public function introduce()
+    {
+        echo "My name is $this->name. I am $this->age years old and I am a $this->gender. My student ID is $this->studentId.";
+    }
+
+}
+
+abstract class Shape
+{
+    abstract public function calculateArea($width, $height);
+}
+
+class Rectangle extends Shape
+{
+    public function calculateArea($width, $height)
+    {
+        echo "Area: " . $height * $width;
+    }
+}
+
+interface Movable
+{
+    public function moveUp();
+
+    public function moveDown();
+
+    public function moveLeft();
+
+    public function moveRight();
+}
+
+class Car implements Movable
+{
+    use Logger;
+
+    public function moveUp()
+    {
+        echo 'moving up...';
+
+    }
+
+    public function moveDown()
+    {
+        echo 'moving down...';
+    }
+
+    public function moveLeft()
+    {
+        echo 'moving left...';
+    }
+
+    public function moveRight()
+    {
+        echo 'moving right...';
+    }
+
+
+}
+
+trait Logger
+{
+    public static $log;
+
+    public static function logMessage($message)
+    {
+        self::$log = $message;
+        echo self::$log;
+    }
+}
+
+$person = new Person('Christian', 19, 'male');
+$person2 = new Person('Mark', 19, 'male');
+$person3 = new Person('Mark', 19, 'male');
+
+$person->introduce();
+echo '<br>';
+$person2->introduce();
+
+$student = new Student('Christian', 19, 'male', 111);
+$student2 = new Student('Christian', 19, 'male', 222);
+
+$student->introduce();
+echo '<br>';
+$student2->introduce();
+
+$rectangle = new Rectangle();
+$rectangle->calculateArea(5, 4);
+
+$car = new Car();
+$car->moveUp();
+$car->moveDown();
+$car->moveLeft();
+$car->moveRight();
+
+$person->countObjects();
+$person2->countObjects();
+$person3->countObjects();
+
+$car->logMessage('hi chris');
+
+?>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<?php
+
+abstract class Animal
+{
+    protected $name;
+    protected $sound;
+    public static $totalAnimals = 0;
+
+    public function __construct($name, $sound)
+    {
+        $this->name = $name;
+        $this->sound = $sound;
+        self::$totalAnimals += 1;
+    }
+
+    public static function getTotalAnimals()
+    {
+        return self::$totalAnimals;
+    }
+
+    public function makeSound()
+    {
+        echo $this->sound;
+    }
+
+}
+
+class Dog extends Animal
+{
+    private $breed;
+
+    public function __construct($name, $sound, $breed)
+    {
+        parent::__construct($name, $sound);
+        $this->breed = $breed;
+    }
+
+    public function makeSound()
+    {
+        echo $this->name . ' the ' . $this->breed . ' says ' . $this->sound;
+    }
+
+}
+
+interface Swim
+{
+    public function swim();
+}
+
+class Dolphin implements Swim
+{
+    public function swim()
+    {
+        echo "The dolphion is swimming gracefully.";
+    }
+}
+
+trait CanFly
+{
+    public function fly()
+    {
+        echo "The bird is flying.";
+    }
+}
+
+class Bird
+{
+    public static $numOfBirds = 0;
+    use CanFly;
+    public function showFlyAbility()
+    {
+        $this->fly();
+    }
+
+    public static function countBirds()
+    {
+
+        echo self::$numOfBirds;
+    }
+}
+
+class Sparrow extends Bird
+{
+    const WINGS = 2;
+
+    public function __construct()
+    {
+        self::$numOfBirds += 1;
+
+    }
+
+}
+
+$dog1 = new Dog("Buddy", "Woof", "Labrador Retriever");
+$dog2 = new Dog("Max", "Bark", "German Shepherd");
+
+$dog1->makeSound();
+$dog2->makeSound();
+
+$dog = new Dog("Ps", "Rawr", "Pitbull");
+$dog->makeSound();
+
+$dolphin = new Dolphin();
+$dolphin->swim();
+
+$bird = new Bird();
+$bird->showFlyAbility();
+
+$sparrow = new Sparrow();
+$sparrow2 = new Sparrow();
+$sparrow3 = new Sparrow();
+$sparrow2->countBirds();
+
+$animals = array(
+    $dog1 = new Dog("Buddy", "Woof", "Labrador Retriever"),
+    $dog2 = new Dog("Max", "Bark", "German Shepherd"),
+    $dolphin1 = new Dolphin(),
+    $sparrow1 = new Sparrow(),
+    $sparrow2 = new Sparrow()
+);
+
+foreach ($animals as $animal) {
+    if ($animal === $dog1 or $animal === $dog2) {
+        echo $animal->makeSound();
+        echo '<br>';
+    } elseif ($animal === $dolphin1) {
+        echo $animal->swim();
+        echo '<br>';
+    } else {
+        echo $animal->showFlyAbility();
+        echo "<br>";
+    }
+}
+
+echo Animal::getTotalAnimals();
+
+echo Sparrow::$numOfBirds;
+
+?>

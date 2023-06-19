@@ -1,0 +1,217 @@
+interface Borrowable
+{
+    public function borrow();
+    public function return ();
+    public function isBorrowed();
+}
+
+trait Categorizable
+{
+    public function setCategory($category)
+    {
+
+    }
+
+    public function getCategory()
+    {
+
+    }
+
+
+}
+
+class LibraryItem implements Borrowable
+{
+    use Categorizable;
+
+    public $title;
+    public $borrowed;
+    public $category;
+
+    public static $lateFee;
+
+    public function __construct($title, $borrowed, $category)
+    {
+        $this->title = $title;
+        $this->borrowed = $borrowed;
+        $this->category = $category;
+    }
+
+    public static function setLateFee($amount)
+    {
+        self::$lateFee = $amount;
+    }
+
+    public function borrow()
+    {
+        $this->borrowed = true;
+    }
+    public function return ()
+    {
+        $this->borrowed = false;
+    }
+    public function isBorrowed()
+    {
+        return $this->borrowed;
+    }
+
+
+}
+
+class Book extends LibraryItem
+{
+    public $author;
+
+    public function __construct($title, $author, $category)
+    {
+        $this->author = $author;
+        $this->title = $title;
+        $this->category = $category;
+    }
+
+    public function getCategory()
+    {
+        return $this->category;
+    }
+
+}
+
+class DVD extends LibraryItem
+{
+    public $director;
+
+    public function __construct($title, $director, $category)
+    {
+        $this->director = $director;
+        $this->title = $title;
+        $this->category = $category;
+
+    }
+
+    public function getCategory()
+    {
+        return $this->category;
+    }
+
+}
+
+$book1 = new Book('The Great Gatsby', 'F. Scott Fitzgerald', 'Fiction');
+$dvd1 = new DVD('Inception', 'Christopher Nolan', 'Sci-Fi');
+
+$book1->borrow();
+echo '<br>';
+$dvd1->borrow();
+$book1->return();
+
+$book1Status = $book1->isBorrowed() ? 'Borrowed' : 'Available';
+$dvd1Status = $dvd1->isBorrowed() ? 'Borrowed' : 'Available';
+
+$book1Category = $book1->getCategory();
+$dvd1Category = $dvd1->getCategory();
+
+LibraryItem::setLateFee(2.5);
+$lateFeeAmount = LibraryItem::$lateFee;
+echo $lateFeeAmount;
+
+
+
+
+
+
+
+
+interface Purchasable
+{
+    public function getPrice();
+}
+
+trait Shipping
+{
+    public function calculateShippingCost($weight)
+    {
+        return "Shipping Cost: " . $weight->price .3;
+    }
+
+    public function getShippingMethod()
+    {
+
+    }
+}
+
+class Product implements Purchasable
+{
+
+    public $name;
+    public $price;
+    public $weight;
+    use Shipping;
+
+    public function __construct($name, $price, $weight)
+    {
+        $this->name = $name;
+        $this->price = $price;
+        $this->weight = $weight;
+    }
+
+    public function getPrice()
+    {
+        echo $this->price;
+
+    }
+
+
+}
+
+class Order
+{
+    public $items = array();
+
+
+    public static $shippingMethod;
+
+    public static function setShippingMethod($method)
+    {
+        self::$shippingMethod = $method;
+    }
+
+    public function addItem($product)
+    {
+        $this->items[] = $product;
+    }
+
+    public function getTotalPrice()
+    {
+        $total = 0;
+        foreach ($this->items as $item) {
+            $total += $item->price;
+        }
+
+        return "Total: " . $total;
+    }
+
+    public function getShippingMethod()
+    {
+        return self::$shippingMethod;
+    }
+}
+
+$product1 = new Product('T-shirt', 19.99, 0.2);
+$product2 = new Product('Jeans', 49.99, 0.8);
+// echo $product1->getPrice();
+$order = new Order();
+
+$order->addItem($product1);
+$order->addItem($product2);
+// var_dump($order->items);
+$totalPrice = $order->getTotalPrice();
+echo $totalPrice;
+
+Order::setShippingMethod('Express');
+$shippinCost1 = $product1->calculateShippingCost($product1);
+$shippinCost2 = $product1->calculateShippingCost($product2);
+echo '<br>';
+echo $shippinCost1;
+
+
+echo '<br>';
+echo $shippinCost2;
